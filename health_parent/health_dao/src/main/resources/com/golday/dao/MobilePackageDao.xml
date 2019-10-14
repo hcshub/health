@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.golday.dao.MobilePackageDao">
+    <resultMap id="findPackageCheckgroupCheckitem" type="package">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+        <result column="img" property="img"/>
+        <collection property="checkGroups" ofType="checkGroup" javaType="List">
+            <id column="checkgroup_id" property="id"></id>
+            <result column="checkgroup_name" property="name"></result>
+            <result column="checkgroup_remark" property="remark"></result>
+            <collection property="checkItems" ofType="checkItem" javaType="List">
+                <id column="checkitem_id" property="id"></id>
+                <result column="checkitem_name" property="name"></result>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="findPackage" parameterType="int" resultMap="findPackageCheckgroupCheckitem">
+        SELECT p.*, g.id AS checkgroup_id, g.name AS checkgroup_name, g.`remark` AS checkgroup_remark,
+        i.id AS checkitem_id, i.`name` AS checkitem_name FROM
+        t_checkitem i, t_checkgroup_checkitem cc, t_checkgroup g,
+        t_package_checkgroup pc, t_package p
+        WHERE i.id = cc.`checkitem_id` AND cc.`checkgroup_id` = g.`id`
+        AND g.id = pc.`checkgroup_id` AND pc.`package_id` = p.id
+        AND p.id = #{id}
+    </select>
+
+    <select id="showPackage" parameterType="int" resultType="package">
+        select * from t_package where id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.golday.dao.OrdersettingDao">
+        <select id="findDate" parameterType="string" resultType="string">
+                select orderDate from t_ordersetting
+                <where>
+                        orderDate
+                        <foreach collection="list" separator="," item="i" open="in(" close=")">
+                                #{i}
+                        </foreach>
+                </where>
+        </select>
+
+        <update id="updateOrderSetting" parameterType="orderSetting" >
+                update t_ordersetting set number = #{number} where orderDate = #{date}
+        </update>
+
+        <insert id="addOrderSettring" parameterType="orderSetting">
+                insert into t_ordersetting (orderDate,number,reservations) values (#{date},#{number},0)
+        </insert>
+
+        <select id="getOrder" parameterType="string" resultType="orderSetting">
+                select * from t_ordersetting where orderDate between #{beginDate} and #{endDate}
+        </select>
+
+        <select id="findOrderSetting" parameterType="string" resultType="orderSetting">
+                select * from t_ordersetting where orderDate = #{orderDate}
+        </select>
+
+        <update id="updateAutoNumber" parameterType="string">
+                update t_orderSetting set number = number + 1 where orderDate = #{orderDate}
+        </update>
+
+        <select id="findByTodayOrderNumber" parameterType="string" resultType="int">
+                SELECT reservations FROM t_ordersetting WHERE orderDate = #{today}
+        </select>
+
+        <select id="findThisWeekOrderNumber" parameterType="string" resultType="int">
+                SELECT SUM(reservations) FROM t_ordersetting WHERE orderDate BETWEEN #{beginDate} AND #{endDate}
+        </select>
+
+        <select id="findByThisMonthOrderNumber" parameterType="string" resultType="int">
+                SELECT SUM(reservations) FROM t_ordersetting WHERE orderDate BETWEEN #{monthStartDay} AND #{monthLastDay}
+        </select>
+</mapper>

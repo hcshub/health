@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.golday.dao.CheckgroupDao">
+    <select id="allCheckItem" resultType="checkItem">
+        select * from t_checkitem
+    </select>
+
+    <insert id="addCheckGroup" parameterType="checkGroup">
+        insert into t_checkgroup (code,name,helpCode,sex,remark,attention)
+        values (#{code},#{name},#{helpCode},#{sex},#{remark},#{attention})
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <insert id="" parameterType="map">
+        insert into t_checkgroup_checkitem values
+        <foreach collection="#{list}" ></foreach>
+    </insert>
+
+    <select id="allCheckGroup" parameterType="string" resultType="checkgroup">
+        select * from t_checkgroup
+        <where>
+            <if test="value != null and value != 'null' and value != ''">
+                code like '%${value}%' or name like '%${value}%'
+            </if>
+        </where>
+    </select>
+
+    <select id="findGroupPackage" parameterType="int" resultType="int">
+        select count(1) from t_package_checkgroup where checkgroup_id = #{id}
+    </select>
+
+    <delete id="deleteCheckGroup" parameterType="int">
+        delete from t_checkgroup where id = #{id}
+    </delete>
+
+    <insert id="addCheckGroupCheckItem" parameterType="map">
+        insert into t_checkgroup_checkitem values (#{id},#{checkitemId})
+    </insert>
+
+    <select id="findCheckgroup" parameterType="int" resultType="checkgroup">
+        select * from t_checkgroup where id = #{id}
+    </select>
+
+    <select id="findCheckitemIds" parameterType="int" resultType="int">
+        select checkitem_id from t_checkgroup_checkitem where checkgroup_id = #{id}
+    </select>
+
+    <update id="updateCheckgroup" parameterType="checkGroup">
+        update t_checkgroup
+        <set>
+            code = #{code},
+            name = #{name},
+            helpCode = #{helpCode},
+            sex = #{sex},
+            remark = #{remark},
+            attention = #{attention}
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteGroupItem" parameterType="int">
+        delete from t_checkgroup_checkitem where checkgroup_id = #{id}
+    </delete>
+</mapper>

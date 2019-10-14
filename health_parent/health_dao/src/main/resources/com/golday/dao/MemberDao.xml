@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.golday.dao.MemberDao">
+        <select id="findMemberByTelephone" parameterType="string" resultType="member">
+                select * from t_member where phoneNumber = #{telephone}
+        </select>
+
+        <insert id="addMember" parameterType="member">
+                insert into t_member (fileNumber,name,sex,idCard,phoneNumber,regTime,password,email,birthday,remark)
+                values (#{fileNumber},#{name},#{sex},#{idCard},#{phoneNumber},#{regTime},#{password},#{email},#{birthday},#{remark})
+                <selectKey keyProperty="id" resultType="int" order="AFTER">
+                        select last_insert_id()
+                </selectKey>
+        </insert>
+
+        <select id="findByTodayMmber" parameterType="string" resultType="int">
+                SELECT COUNT(id) FROM t_member WHERE regTime = #{today}
+        </select>
+
+        <select id="findByThisWeekNewMember" parameterType="string" resultType="int">
+                SELECT COUNT(id) FROM t_member WHERE regTime BETWEEN #{beginDate} AND #{endDate}
+        </select>
+
+        <select id="findByTotalMember" resultType="int">
+                select count(id) from t_member
+        </select>
+
+        <select id="findByThisMonthNewMember" parameterType="string" resultType="int">
+                SELECT COUNT(id) FROM t_member WHERE regTime BETWEEN #{monthStartDay} AND #{monthLastDay}
+        </select>
+</mapper>
