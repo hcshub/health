@@ -4,24 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.golday</groupId>
+    <groupId>it.cast</groupId>
     <artifactId>health_parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>health_common</module>
         <module>health_pojo</module>
         <module>health_dao</module>
-        <module>health_interface</module>
         <module>health_service</module>
-        <module>health_controller</module>
-        <module>jobs</module>
-        <module>healthmobile_web</module>
-        <module>health_secutity</module>
-        <module>excelFile</module>
+        <module>health_interface</module>
+        <module>health_web</module>
+        <module>health_jobs</module>
+        <module>health_mobile</module>
+
     </modules>
     <packaging>pom</packaging>
 
-    <!-- 集中定义依赖版本号 -->
+    <!--版本锁定-->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -41,10 +40,9 @@
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
         <spring.security.version>5.0.5.RELEASE</spring.security.version>
         <poi.version>3.16</poi.version>
-        <jedis.version>2.8.1</jedis.version>
+        <jedis.version>2.7.0</jedis.version>
         <quartz.version>2.2.1</quartz.version>
     </properties>
-
     <!-- 依赖管理标签  必须加 -->
     <dependencyManagement>
         <dependencies>
@@ -245,6 +243,8 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <!--导入依赖,在父项目导入的依赖所有子项目均可以使用,不用再导入-->
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -253,5 +253,6 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
 
 </project>

@@ -6,17 +6,30 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="excelFile" />
         <module name="health_common" />
-        <module name="health_controller" />
         <module name="health_dao" />
         <module name="health_interface" />
+        <module name="health_jobs" />
+        <module name="health_mobile" />
         <module name="health_pojo" />
-        <module name="health_secutity" />
         <module name="health_service" />
-        <module name="healthmobile_web" />
+        <module name="health_web" />
         <module name="jobs" />
+        <module name="securityDemo" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="health_common" target="1.8" />
+      <module name="health_dao" target="1.8" />
+      <module name="health_interface" target="1.8" />
+      <module name="health_jobs" target="1.8" />
+      <module name="health_mobile" target="1.8" />
+      <module name="health_parent" target="1.8" />
+      <module name="health_pojo" target="1.8" />
+      <module name="health_service" target="1.8" />
+      <module name="health_web" target="1.8" />
+      <module name="jobs" target="1.8" />
+      <module name="securityDemo" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
